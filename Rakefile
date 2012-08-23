@@ -62,7 +62,7 @@ task :update do
   end
 
   # the -C option ignores files that
-  copy_result = `rsync -aC --filter='merge .rsync-filters' .svn-copy/ driver/ 2>&1`
+  copy_result = `rsync -aC --filter='merge .rsync-filters' --exclude='*.git*' .svn-copy/ driver/ 2>&1`
 
   if ! $?.success?
     SpinningCursor.set_message "Failed to copy files into repo, output from rsync follows:"
