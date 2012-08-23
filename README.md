@@ -37,4 +37,5 @@ can review the changes and commit these.
 Our approach has been to mention the SVN version in the commits also tagged these commits like so:
  * [selenium-2.25.0](https://github.com/resolve/selenium-iosdriver/tree/selenium-2.25.0)
  * [selenium-r17708](https://github.com/resolve/selenium-iosdriver/tree/selenium-r17708)
+
 This makes it easier to track which SVN version is committed.
