@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    spinning_cursor (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  spinning_cursor
