@@ -8,17 +8,29 @@ This means a ~450MB download just to compile and run the iOS driver. For the
 purposes of simplified distribution this project allows distribution of just
 the essential files to compile the app (closer the 20MB total).
 
-Under the `driver/` directory is the latest version distributed in this repo, to
-update it there is a rake task that will pull down the full SVN repo into a
-hidden directory (`.svn-copy/`) run a build task (`./go iphone_atoms`) and then
-copy the necessary files into the `driver/` directory. To run this call:
+Under the `driver/` directory is the latest version distributed in this repo.
+
+## Building
+
+To build the app for the iOS simulator using the latest iOS SDK installed on
+your machine run:
 ```
-$ rake update
+rake selenium:iosdriver:build
+```
+The build files are then  found at `driver/iphone/build/`.
+
+## Updating
+To update there is a rake task that will pull down the full SVN repo into a
+hidden directory (`.svn-copy/`) run a build task (`./go iphone_atoms`)
+and then copy the necessary files into the `driver/` directory.
+To run this call:
+```
+$ rake selenium:update
 ```
 
 If you want to update to a particular tag in the Selenium SVN repository:
 ```
-$ rake update TAG=selenium-2.25.0
+$ rake selenium:update TAG=selenium-2.25.0
 ```
 
 Output from these commands will be something like:
