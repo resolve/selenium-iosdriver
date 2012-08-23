@@ -49,7 +49,7 @@ task :update do
     message "Successfully copied files into repo."
   end
 
-  copy_result = `rsync -a --filter='merge .rsync-filters' .svn-copy/ . 2>&1`
+  copy_result = `rsync -a --filter='merge .rsync-filters' .svn-copy/ driver/ 2>&1`
 
   if ! $?.success?
     SpinningCursor.set_message "Failed to copy files into repo, output from rsync follows:"
