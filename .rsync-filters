@@ -10,4 +10,8 @@
 + /COPYING*
 + /CREDITS*
 
++ /rake-tasks/
++ /rake-tasks/checks.rb
+- /rake-tasks/*
+
 - /*

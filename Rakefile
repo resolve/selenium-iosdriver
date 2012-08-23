@@ -3,6 +3,7 @@ require "bundler"
 Bundler.setup
 
 require 'spinning_cursor'
+require 'driver/rake-tasks/checks'
 
 task :update do
   if ENV['TAG']
@@ -73,4 +74,17 @@ task :update do
   SpinningCursor.stop
 
   puts "\nUpdate complete."
+end
+
+task :build do
+  # Copied from https://code.google.com/p/selenium/source/browse/tags/selenium-2.25.0/Rakefile#454
+  sdk = iPhoneSDK?
+  if sdk != nil then
+    puts "Building iWebDriver iOS app."
+    FileUtils.chdir('driver') do
+      sh "cd iphone && xcodebuild -sdk #{sdk} ARCHS=i386 -target iWebDriver", :verbose => false
+    end
+  else
+    puts "XCode not found. Not building the iphone driver."
+  end
 end
