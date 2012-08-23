@@ -5,22 +5,34 @@ Bundler.setup
 require 'spinning_cursor'
 
 task :update do
-  url = 'http://selenium.googlecode.com/svn/trunk/'
-  puts "Checking out the latest version from #{url}."
+  if ENV['TAG']
+    url = "http://selenium.googlecode.com/svn/tags/#{ENV['TAG']}/"
+    puts "Checking out the tagged revision at #{url}."
+  else
+    url = 'http://selenium.googlecode.com/svn/trunk/'
+    puts "Checking out the latest revision at #{url}."
+  end
   puts "If this is the first time it may take several minutes."
 
   SpinningCursor.start do
     banner "Checking out the latest version"
     type :spinner
-    message "Successfully checked out latest version."
+    message "Successfully checked out from SVN."
   end
 
-  checkout_result = `svn co #{url} .svn-copy 2>&1`
+  svn_operation = File.exists?('.svn-copy') ? 'switch' : 'checkout'
+  checkout_result = `svn #{svn_operation} #{url} .svn-copy 2>&1`
 
   if ! $?.success?
     SpinningCursor.set_message "Failed to checkout, output from SVN follows:"
     SpinningCursor.stop
     raise checkout_result
+  else
+    if ENV['TAG']
+      SpinningCursor.set_message "Successfully checked out tag '#{ENV['TAG']}' from SVN."
+    else
+      SpinningCursor.set_message "Successfully checked out revision '#{`svnversion .svn-copy/`.rstrip}' from SVN."
+    end
   end
 
   SpinningCursor.stop
@@ -49,7 +61,7 @@ task :update do
     message "Successfully copied files into repo."
   end
 
-  # the -C option ignores files that 
+  # the -C option ignores files that
   copy_result = `rsync -aC --filter='merge .rsync-filters' .svn-copy/ driver/ 2>&1`
 
   if ! $?.success?
